@@ -1,0 +1,8 @@
+Servidor-Jogos-Node-Telegram/
+│
+├── index.js          # Código principal com integração ao Telegram
+├── gameServer.js     # Simulação de servidor de jogos (com falha para teste)
+├── package.json      # Dependências e scripts npm
+├── .gitignore        # Ignora node_modules e .env
+├── README.md         # Documentação do projeto
+└── .env.example      # Exemplo de configuração
