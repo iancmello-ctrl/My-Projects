@@ -35,8 +35,8 @@ app.listen(PORT, () => {
 
 
 // Configuração do Telegram
-const TELEGRAM_TOKEN = '8604912752:AAFCpKAhnqEuJNO15oTbHZIYr8w2Ec1xj7E';
-const TELEGRAM_CHAT_ID = '8081116530';
+const TELEGRAM_TOKEN = 'Your Token';
+const TELEGRAM_CHAT_ID = 'You chat id';
 
 function sendTelegramAlert(message) {
   const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
