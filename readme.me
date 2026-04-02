@@ -1,0 +1,147 @@
+# ⚙️ Guia Rápido PM2
+
+O **PM2** é um gerenciador de processos para Node.js que mantém seu servidor rodando em segundo plano, sem abrir janelas de prompt na área de trabalho.
+
+## 🚀 Comandos principais
+
+| Comando | Função |
+|---------|--------|
+| `pm2 start index.js --name servidor-jogos` | Inicia o servidor em background com nome personalizado |
+| `pm2 list` | Lista todos os processos ativos |
+| `pm2 stop servidor-jogos` | Para o processo com esse nome |
+| `pm2 stop all` | Para todos os processos ativos |
+| `pm2 restart servidor-jogos` | Reinicia o processo |
+| `pm2 delete servidor-jogos` | Remove o processo do PM2 |
+| `pm2 logs servidor-jogos` | Mostra os logs em tempo real |
+| `pm2 save` | Salva a configuração atual dos processos |
+| `pm2 startup` | Configura para iniciar junto com o sistema |
+
+## 💡 Dicas
+- Após rodar `pm2 start`, você pode **fechar o terminal**: o processo continua rodando em segundo plano.  
+- Use `pm2 logs` apenas quando quiser ver os logs, evitando que o PM2 abra janelas extras.  
+- Com `pm2 save` + `pm2 startup`, seu servidor sobe automaticamente quando o computador reinicia.  
+
+---
+
+📌 Esse guia pode ser incluído no seu repositório como `PM2-README.md` ou até como seção extra no `README.md` principal.
+
+
+
+🔧 Pré-requisitos
+Windows 10 ou superior
+
+Node.js instalado em C:\Program Files\nodejs\node.exe
+
+Projeto com arquivo principal index.js (ex.: C:\Users\Lenovo\Desktop\Projeto2-Servidor\index.js)
+
+NSSM baixado e extraído em C:\Program Files\nssm\win64
+
+🚀 Instalação do Serviço
+Abra o PowerShell como Administrador.
+
+Entre na pasta do NSSM:
+
+powershell
+cd "C:\Program Files\nssm\win64"
+Instale o serviço:
+
+powershell
+.\nssm.exe install ServidorJogos
+Na janela do NSSM, configure:
+
+Path → C:\Program Files\nodejs\node.exe
+
+Startup directory → C:\Users\Lenovo\Desktop\Projeto2-Servidor
+
+Arguments → index.js
+
+Service name → ServidorJogos
+
+Clique em Install service.
+
+▶️ Comandos de Gerenciamento
+Iniciar serviço:
+
+powershell
+.\nssm.exe start ServidorJogos
+Parar serviço:
+
+powershell
+.\nssm.exe stop ServidorJogos
+Reiniciar serviço:
+
+powershell
+.\nssm.exe restart ServidorJogos
+Remover serviço:
+
+powershell
+.\nssm.exe remove ServidorJogos
+✅ Resultado
+O servidor Node.js roda como serviço do Windows, invisível, sem abrir janelas de CMD.
+
+Ele pode ser configurado para iniciar automaticamente junto com o sistema.
+
+Para verificar, abra services.msc e procure por ServidorJogos.
+
+📝 Checklist Pós-Configuração
+Reiniciar o Windows
+
+Reinicie o computador para garantir que o serviço sobe junto com o sistema.
+
+Checar no painel de serviços
+
+Abra services.msc.
+
+Procure pelo serviço ServidorJogos.
+
+Verifique se o status está como Em execução e se o tipo de inicialização está em Automático.
+
+Testar rota no navegador
+
+Abra:
+
+Código
+http://localhost:3000/
+Deve aparecer a mensagem: Servidor rodando com sucesso!
+
+Verificar logs
+
+Vá até a pasta onde configurou os arquivos de log (ex.: logs/output.log e logs/error.log).
+
+Abra os arquivos e veja se há registros de inicialização ou erros.
+
+Testar outras rotas da aplicação
+
+Se tiver endpoints como /api/usuarios, acesse pelo navegador ou Postman.
+
+Confirme que estão respondendo corretamente.
+
+Gerenciar pelo NSSM
+
+Para parar:
+
+powershell
+.\nssm.exe stop ServidorJogos
+Para reiniciar:
+
+powershell
+.\nssm.exe restart ServidorJogos
+Para editar:
+
+powershell
+.\nssm.exe edit ServidorJogos
+✅ Se tudo isso funcionar, significa que seu servidor está rodando em background, iniciando junto com o Windows e com logs configurados.
+
+PARA TESTAR/SIMULAR erros no servidor: 
+// Simula funcionamento normal por alguns segundos
+setTimeout(() => {
+  // Força um erro proposital
+  throw new Error("Falha simulada no servidor de jogo!");
+}, 5000);
+
+// Mantém o servidor imprimindo mensagens enquanto não cai
+setInterval(() => {
+  console.log("Servidor de jogo rodando normalmente...");
+}, 2000);
+
+

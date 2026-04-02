@@ -6,13 +6,37 @@ const validator = require('validator');
 const fs = require('fs');
 const chalk = require('chalk').default;
 const axios = require('axios');
+const favicon = require('serve-favicon');
+app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 const app = express();
 const PORT = 3000;
 
+app.get('/status', (req, res) => {
+  res.send('Servidor de jogo rodando!');
+});
+
+app.listen(PORT, () => {
+  console.log(`Servidor de jogo iniciado na porta ${PORT}`);
+});
+// Rota simples
+app.get('/status', (req, res) => {
+  res.send('Servidor protegido e rodando!');
+});
+
+// Inicializa painel e servidor
+app.listen(PORT, () => {
+  console.log(chalk.yellow.bold(`Painel seguro rodando na porta ${PORT}`));
+  startGameServer();
+
+  // Alerta inicial de sucesso ✅
+  sendTelegramAlert(`✅ [Servidor Jogos] iniciado com sucesso em ${formatDate()}`);
+});
+
+
 // Configuração do Telegram
-const TELEGRAM_TOKEN = 'seu token';
-const TELEGRAM_CHAT_ID = 'seu id';
+const TELEGRAM_TOKEN = '8604912752:AAFCpKAhnqEuJNO15oTbHZIYr8w2Ec1xj7E';
+const TELEGRAM_CHAT_ID = '8081116530';
 
 function sendTelegramAlert(message) {
   const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`;
@@ -93,16 +117,3 @@ function startGameServer() {
   });
 }
 
-// Rota simples
-app.get('/status', (req, res) => {
-  res.send('Servidor protegido e rodando!');
-});
-
-// Inicializa painel e servidor
-app.listen(PORT, () => {
-  console.log(chalk.yellow.bold(`Painel seguro rodando na porta ${PORT}`));
-  startGameServer();
-
-  // Alerta inicial de sucesso ✅
-  sendTelegramAlert(`✅ [Servidor Jogos] iniciado com sucesso em ${formatDate()}`);
-});
